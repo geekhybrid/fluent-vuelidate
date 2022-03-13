@@ -8,6 +8,6 @@ export const useGreaterthan: ValidationAction =
     return {
         rule: `${propertyName} is invalid.`,
         field: propertyName,
-        state: property && comparer > property ? FieldState.Valid : FieldState.Invalid
+        state: property && property > comparer ? FieldState.Valid : FieldState.Invalid
     }
 }
