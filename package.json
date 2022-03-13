@@ -1,7 +1,7 @@
 {
   "name": "fluent-vuelidate",
   "version": "1.0.0",
-  "description": "",
+  "description": "A validation library that allows fluent, type-safe validations for Vue3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,8 +21,11 @@
   "sideEffects": false,
   "scripts": {
     "prebuild": "rimraf ./dist",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test && npm run lint",
+    "version" : "npm run format && git add -A src",
+    "postversion" : "git push && git push --tags",
     "test": "mocha",
-    "prepublishOnly": "npm test && npm run lint",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
