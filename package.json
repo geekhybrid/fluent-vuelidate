@@ -24,7 +24,7 @@
     "test": "mocha",
     "prepublishOnly": "npm test && npm run lint",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
   },
   "devDependencies": {

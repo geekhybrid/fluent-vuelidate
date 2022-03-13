@@ -9,9 +9,9 @@ export interface Model {
 
 export const useTestModel = (): Model => {
     return {
-        firstName: "fluent",
-        lastName: "vuelidate",
+        firstName: 'fluent',
+        lastName: 'vuelidate',
         age: 29,
-        currencyCode: 'GBP'
+        currencyCode: 'GBP',
     } as Model;
-}
+};
