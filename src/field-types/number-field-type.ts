@@ -1,4 +1,4 @@
-import { Field, FieldValidator, ModelValidationCollection } from '../types';
+import { FieldValidator, ModelValidationCollection, NumberValidator } from '../types';
 import { useIsRequired } from '../validation-actions/is-required';
 import { useIsEquals } from '../validation-actions/is-equals';
 import { useLessThan } from '../validation-actions/is-less-than';
@@ -7,17 +7,7 @@ import { useGreaterthan } from '../validation-actions/is-greater-than';
 import { useGreathanOrEquals } from '../validation-actions/is-greater-than-or-equals';
 import { useIsWithinRange } from '../validation-actions/is-within-range';
 
-export type NumberValidator<TModel> = Field<TModel> & {
-    isRequired: () => NumberValidator<TModel>;
-    isEquals: (comparer: number) => NumberValidator<TModel>;
-    isLessThan: (comparer: number) => NumberValidator<TModel>;
-    isLessOrEquals: (comparer: number) => NumberValidator<TModel>;
-    isGreaterThan: (comparer: number) => NumberValidator<TModel>;
-    isGreaterOrEquals: (comparer: number) => NumberValidator<TModel>;
-    isWithinRange: (min: number, max: number) => NumberValidator<TModel>;
-};
-
-export const createNumberValidator = <TModel extends { [property: string]: any }>(
+export const createNumberValidator = <TModel extends Record<string, any>>(
     model: TModel,
     property: string,
     validations: ModelValidationCollection,

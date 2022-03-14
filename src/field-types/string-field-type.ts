@@ -1,18 +1,9 @@
-import { Extremes, Field, FieldValidator, ModelValidationCollection } from '../types';
+import { Extremes, FieldValidator, ModelValidationCollection, StringValidator } from '../types';
 import { useIsEmail } from '.././validation-actions/is-email';
 import { useIsRequired } from '../validation-actions/is-required';
 import { useIsEquals } from '../validation-actions/is-equals';
 import { useHasLength } from '../validation-actions/has-length';
 import { useLimitedLength } from '../validation-actions/has-min-max-length';
-
-export type StringValidator<TModel> = Field<TModel> & {
-    isRequired: () => StringValidator<TModel>;
-    isEquals: (comparer: string) => StringValidator<TModel>;
-    isEmail: () => StringValidator<TModel>;
-    hasLength: (fixedLength: number) => StringValidator<TModel>;
-    hasMinLength: (minLength: number) => StringValidator<TModel>;
-    hasMaxLength: (maxLength: number) => StringValidator<TModel>;
-};
 
 export const createStringValidator = <TModel extends Record<string, any>>(
     model: TModel,

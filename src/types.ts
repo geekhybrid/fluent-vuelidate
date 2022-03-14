@@ -1,13 +1,4 @@
 import { Ref } from 'vue';
-import { NumberValidator } from './field-types/number-field-type';
-import { StringValidator } from './field-types/string-field-type';
-
-export type FieldValidator<TPropertyType, T> = TPropertyType extends string
-    ? StringValidator<T>
-    : TPropertyType extends number
-    ? NumberValidator<T>
-    : any;
-// : ArrayFieldValidator<T, TPropertyType extends (infer ElementType)[] ? ElementType : never>
 
 export type Validator<TModel> = {
     model: TModel;
@@ -20,6 +11,37 @@ export enum FieldState {
     Untouched = 'Untouched',
     Dirty = 'Dirty',
 }
+
+export type ArrayValidator<TModel, TElementType> = Field<TModel> & {
+    model: TModel;
+    failWhenEvery: (predicate: (item: TElementType) => boolean) => ArrayValidator<TModel, TElementType>;
+    failWhenAny: (predicate: (item: TElementType) => boolean) => ArrayValidator<TModel, TElementType>;
+};
+
+export type StringValidator<TModel> = Field<TModel> & {
+    isRequired: () => StringValidator<TModel>;
+    isEquals: (comparer: string) => StringValidator<TModel>;
+    isEmail: () => StringValidator<TModel>;
+    hasLength: (fixedLength: number) => StringValidator<TModel>;
+    hasMinLength: (minLength: number) => StringValidator<TModel>;
+    hasMaxLength: (maxLength: number) => StringValidator<TModel>;
+};
+
+export type NumberValidator<TModel> = Field<TModel> & {
+    isRequired: () => NumberValidator<TModel>;
+    isEquals: (comparer: number) => NumberValidator<TModel>;
+    isLessThan: (comparer: number) => NumberValidator<TModel>;
+    isLessOrEquals: (comparer: number) => NumberValidator<TModel>;
+    isGreaterThan: (comparer: number) => NumberValidator<TModel>;
+    isGreaterOrEquals: (comparer: number) => NumberValidator<TModel>;
+    isWithinRange: (min: number, max: number) => NumberValidator<TModel>;
+};
+
+export type FieldValidator<TPropertyType, T> = TPropertyType extends string
+    ? StringValidator<T>
+    : TPropertyType extends number
+    ? NumberValidator<T>
+    : ArrayValidator<T, TPropertyType extends (infer ElementType)[] ? ElementType : never>;
 
 export type FieldValidationResult = {
     field: string;
@@ -51,8 +73,9 @@ export type Field<TModel> = {
 };
 
 export type ValidationBuilder<T> = {
-    // field: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(property: TPropertyName)
-    //     => FieldValidator<TPropertyType, T>
+    field: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(
+        property: TPropertyName,
+    ) => FieldValidator<TPropertyType, T>;
     isValid: boolean;
     fieldStates: Ref<FieldStates<T>>;
     model: T;
