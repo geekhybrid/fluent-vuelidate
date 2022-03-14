@@ -5,6 +5,7 @@ export interface Model {
     email: string;
     password: string;
     currencyCode: string;
+    wallets: string[];
 }
 
 export const useTestModel = (): Model => {

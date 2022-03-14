@@ -14,7 +14,6 @@ export enum FieldState {
 
 export type ArrayValidator<TModel, TElementType> = Field<TModel> & {
     model: TModel;
-    failWhenEvery: (predicate: (item: TElementType) => boolean) => ArrayValidator<TModel, TElementType>;
     failWhenAny: (predicate: (item: TElementType) => boolean) => ArrayValidator<TModel, TElementType>;
 };
 
