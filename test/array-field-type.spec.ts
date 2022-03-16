@@ -1,8 +1,8 @@
 import assert from 'assert';
 import { FieldState } from '../dist/types';
-import { createArrayValidator } from "../src/field-types/array-field-type";
-import { ModelValidationCollection } from "../src/types";
-import { Model, useTestModel } from "./model";
+import { createArrayValidator } from '../src/field-types/array-field-type';
+import { ModelValidationCollection } from '../src/types';
+import { Model, useTestModel } from './model';
 
 const model = useTestModel();
 
@@ -12,7 +12,10 @@ describe('array validation', function () {
             const collection: ModelValidationCollection = {};
             const validation = createArrayValidator<Model, string>(model, 'wallets', collection);
 
-            assert.notEqual(validation.failWhenAny((_) => true), undefined);
+            assert.notEqual(
+                validation.failWhenAny((_) => true),
+                undefined,
+            );
             assert.equal(collection['wallets'].length, 1);
         });
 
@@ -22,7 +25,7 @@ describe('array validation', function () {
             testModel.wallets = ['USD', 'BTC', 'ETH'];
 
             var validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
-            validator.failWhenAny((item) => item === 'ETH')
+            validator.failWhenAny((item) => item === 'ETH');
 
             assert.equal(collection['wallets'][0](testModel, 'wallets').state, FieldState.Invalid);
         });
@@ -32,7 +35,7 @@ describe('array validation', function () {
             testModel.wallets = ['USD', 'BTC'];
 
             var validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
-            validator.failWhenAny((item) => item === 'ETH')
+            validator.failWhenAny((item) => item === 'ETH');
 
             assert.equal(collection['wallets'][0](testModel, 'wallets').state, FieldState.Valid);
         });
