@@ -1,10 +1,5 @@
 import { Ref } from 'vue';
 
-export type Validator<TModel> = {
-    model: TModel;
-    properties: FieldStates<TModel>;
-};
-
 export enum FieldState {
     Valid = 'Valid',
     Invalid = 'Invalid',
@@ -64,19 +59,18 @@ export type FieldValidity = {
 };
 
 export interface ModelValidationCollection extends Record<string, ValidationAction[]> {}
+export interface FieldStateCollection extends Record<string, FieldState> {}
 
 export type Field<TModel> = {
     isValid: () => boolean;
     next: ValidationBuilder<TModel>;
-    validator: Validator<TModel>;
+    fieldsState: FieldStateCollection;
 };
 
 export type ValidationBuilder<T> = {
-    field: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(
+    for: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(
         property: TPropertyName,
     ) => FieldValidator<TPropertyType, T>;
-    isValid: boolean;
-    fieldStates: Ref<FieldStates<T>>;
     model: T;
 };
 

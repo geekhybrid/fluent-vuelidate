@@ -6,6 +6,7 @@
         "strict": true,
         "outDir": "./dist",
         "noUnusedLocals": true,
+        "esModuleInterop": true, 
         "noUnusedParameters": true,
         "types": [
             "node",
