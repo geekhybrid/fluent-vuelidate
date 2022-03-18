@@ -1,10 +1,10 @@
-import { FieldState, ValidationAction } from '../types';
+import { FieldState, FieldValidationResult } from '../types';
 
-export const useIsWithinRange: ValidationAction = <TModel extends Record<string, any>, TArgument>(
+export const useIsWithinRange = <TModel extends Record<string, any>, TArgument>(
     model: TModel,
     propertyName: string,
     comparer: TArgument,
-) => {
+): FieldValidationResult => {
     const property = model[propertyName];
     const { max, min } = comparer as unknown as { min: number; max: number };
 

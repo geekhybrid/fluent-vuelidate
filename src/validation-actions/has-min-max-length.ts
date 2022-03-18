@@ -1,10 +1,10 @@
-import { Extremes, FieldState, ValidationAction } from '../types';
+import { Extremes, FieldState, FieldValidationResult } from '../types';
 
-export const useLimitedLength: ValidationAction = <TModel extends Record<string, any>, TArgument>(
+export const useLimitedLength = <TModel extends Record<string, any>, TArgument>(
     model: TModel,
     propertyName: string,
     args: TArgument,
-) => {
+): FieldValidationResult => {
     const property = model[propertyName];
     const { limit, type } = args as unknown as { limit: number; type: Extremes };
 

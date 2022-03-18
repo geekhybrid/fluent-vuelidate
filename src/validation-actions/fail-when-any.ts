@@ -1,10 +1,10 @@
-import { FieldState, ValidationAction } from '../types';
+import { FieldState, FieldValidationResult } from '../types';
 
-export const useFailWhenAny: ValidationAction = <TModel extends Record<string, any>, TArgument>(
+export const useFailWhenAny = <TModel extends Record<string, any>, TElementType>(
     model: TModel,
     propertyName: string,
-    callback: TArgument,
-) => {
+    callback: (item: TElementType) => Boolean,
+): FieldValidationResult => {
     const value = model[propertyName];
     if (!Array.isArray(value)) throw TypeError(`${propertyName} is not an array to be used with an array validator.`);
 

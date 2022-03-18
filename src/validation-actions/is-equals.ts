@@ -1,10 +1,10 @@
-import { FieldState, ValidationAction } from '../types';
+import { FieldState, FieldValidationResult } from '../types';
 
-export const useIsEquals: ValidationAction = <TModel extends Record<string, any>, TArgument>(
+export const useIsEquals = <TModel extends Record<string, any>, TArgument>(
     model: TModel,
     propertyName: string,
     comparer: TArgument,
-) => {
+): FieldValidationResult => {
     const property = model[propertyName];
 
     return {

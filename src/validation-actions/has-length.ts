@@ -1,10 +1,10 @@
-import { FieldState, ValidationAction } from '../types';
+import { FieldState, FieldValidationResult } from '../types';
 
-export const useHasLength: ValidationAction = <TModel extends Record<string, any>, TArgument>(
+export const useHasLength = <TModel extends Record<string, any>>(
     model: TModel,
     propertyName: string,
-    fixedLength: TArgument,
-) => {
+    fixedLength: number,
+): FieldValidationResult => {
     const property = model[propertyName];
 
     return {

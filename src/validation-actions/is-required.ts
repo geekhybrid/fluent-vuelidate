@@ -1,9 +1,9 @@
-import { FieldState, ValidationAction } from '../types';
+import { FieldState, FieldValidationResult } from '../types';
 
-export const useIsRequired: ValidationAction = <TModel extends Record<string, any>>(
+export const useIsRequired = <TModel extends Record<string, any>>(
     model: TModel,
     propertyName: string,
-) => {
+): FieldValidationResult => {
     return {
         rule: `${propertyName} is required`,
         field: propertyName,
