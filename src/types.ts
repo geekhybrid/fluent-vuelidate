@@ -1,10 +1,5 @@
 import { ComputedRef, Ref } from 'vue';
 
-export type Validator<TModel> = {
-    model: TModel;
-    properties: FieldStates<TModel>;
-};
-
 export enum FieldState {
     Valid = 'Valid',
     Invalid = 'Invalid',
@@ -65,7 +60,6 @@ export type Field<TModel> = {
     isValid: ComputedRef<boolean>;
     model: TModel;
     next: ValidationBuilder<TModel>;
-    validator: Validator<TModel>;
     fields: FieldStates<TModel>;
 };
 
