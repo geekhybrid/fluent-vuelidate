@@ -1,3 +1,3 @@
-export const finalExport = () => {
-    return 1 + 1;
-};
+import { useValidator } from './use-validations';
+
+export { useValidator };

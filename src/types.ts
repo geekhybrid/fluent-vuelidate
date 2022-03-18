@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import { ComputedRef, Ref } from 'vue';
 
 export type Validator<TModel> = {
     model: TModel;
@@ -13,7 +13,6 @@ export enum FieldState {
 }
 
 export type ArrayValidator<TModel, TElementType> = Field<TModel> & {
-    model: TModel;
     failWhenAny: (predicate: (item: TElementType) => boolean) => ArrayValidator<TModel, TElementType>;
 };
 
@@ -53,31 +52,30 @@ export enum Extremes {
     maximum = 'Maximum',
 }
 
-export type ValidationAction = <TModel, TArgument extends any = {}>(
-    model: TModel,
-    propertyName: string,
-    args?: TArgument,
-) => FieldValidationResult;
+export type RunValidationCallback = () => FieldValidationResult;
 
 export type FieldValidity = {
     notValid: boolean;
+    isValid: boolean;
 };
 
-export interface ModelValidationCollection extends Record<string, ValidationAction[]> {}
+export interface ModelValidationCollection extends Record<string, RunValidationCallback[]> {}
 
 export type Field<TModel> = {
-    isValid: () => boolean;
+    isValid: ComputedRef<boolean>;
+    model: TModel;
     next: ValidationBuilder<TModel>;
     validator: Validator<TModel>;
+    fields: FieldStates<TModel>;
 };
 
 export type ValidationBuilder<T> = {
-    field: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(
+    for: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(
         property: TPropertyName,
     ) => FieldValidator<TPropertyType, T>;
     isValid: boolean;
-    fieldStates: Ref<FieldStates<T>>;
     model: T;
+    fields: FieldStates<T>;
 };
 
 export interface ModelState {
