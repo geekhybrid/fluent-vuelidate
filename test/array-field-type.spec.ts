@@ -27,7 +27,7 @@ describe('array validation', function () {
             var validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
             validator.failWhenAny((item) => item === 'ETH');
 
-            assert.equal(collection['wallets'][0](testModel, 'wallets').state, FieldState.Invalid);
+            assert.equal(collection['wallets'][0]().state, FieldState.Invalid);
         });
         it('failWhenAny should be valid if no elements returns true for the predicate', function () {
             const collection: ModelValidationCollection = {};
@@ -37,7 +37,7 @@ describe('array validation', function () {
             var validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
             validator.failWhenAny((item) => item === 'ETH');
 
-            assert.equal(collection['wallets'][0](testModel, 'wallets').state, FieldState.Valid);
+            assert.equal(collection['wallets'][0]().state, FieldState.Valid);
         });
     });
 });

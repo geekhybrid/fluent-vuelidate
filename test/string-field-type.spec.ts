@@ -1,5 +1,4 @@
 import assert from 'assert';
-import { expect } from 'chai';
 import { ModelValidationCollection } from '../src/types';
 import { FieldState } from '../src/types';
 import { createStringValidator } from '../src/field-types/string-field-type';
@@ -21,12 +20,12 @@ describe('string validation', function () {
         it('#isRequired() should return valid when string is not empty', function () {
             const model = useTestModel();
 
-            expect(useIsRequired<Model>(model, 'firstName').state).to.equal(FieldState.Valid);
+            assert.equal(useIsRequired<Model>(model, 'firstName'), FieldState.Valid);
         });
         it('#isRequired() should return invalid when string is undefined', function () {
             const model = {} as Model;
 
-            expect(useIsRequired<Model>(model, 'firstName').state).to.equal(FieldState.Invalid);
+            assert.equal(useIsRequired<Model>(model, 'firstName'), FieldState.Invalid);
         });
     });
 
@@ -40,8 +39,8 @@ describe('string validation', function () {
         });
 
         it('#isEquals() should return invalid if string does not exactly match field', () => {
-            expect(useIsEquals<Model>(model, 'firstName', 'NOT_VALID').state).to.equal(FieldState.Invalid);
-            expect(useIsEquals<Model>(model, 'firstName', model.firstName).state).to.equal(FieldState.Valid);
+            assert.equal(useIsEquals(model, 'firstName', 'NOT_VALID').state, FieldState.Invalid);
+            assert.equal(useIsEquals(model, 'firstName', model.firstName), FieldState.Valid);
             const testModel = useTestModel();
             const cases: Record<string, FieldState> = {};
             cases[testModel.firstName] = FieldState.Valid;
@@ -52,7 +51,7 @@ describe('string validation', function () {
                 const validation = createStringValidator(model, 'firstName', collection);
                 validation.isEquals(testCase);
 
-                assert.equal(collection['firstName'][0](testModel, 'firstName', testCase).state, cases[testCase]);
+                assert.equal(collection['firstName'][0]().state, cases[testCase]);
             }
         });
     });
@@ -80,7 +79,7 @@ describe('string validation', function () {
 
             for (const testCase in cases) {
                 testModel.email = testCase;
-                assert.equal(collection['email'][0](testModel, 'email').state, cases[testCase]);
+                assert.equal(collection['email'][0]().state, cases[testCase]);
             }
         });
     });
@@ -107,7 +106,7 @@ describe('string validation', function () {
             for (const testCase in cases) {
                 testModel.currencyCode = testCase;
 
-                assert.equal(collection['currencyCode'][0](testModel, 'currencyCode').state, cases[testCase]);
+                assert.equal(collection['currencyCode'][0]().state, cases[testCase]);
             }
         });
     });
@@ -134,7 +133,7 @@ describe('string validation', function () {
 
             for (const testCase in cases) {
                 testModel.email = testCase;
-                assert.equal(collection['email'][0](testModel, 'email').state, cases[testCase]);
+                assert.equal(collection['email'][0]().state, cases[testCase]);
             }
         });
     });
@@ -161,7 +160,7 @@ describe('string validation', function () {
             for (const testCase in cases) {
                 testModel.password = testCase;
 
-                assert.equal(collection['password'][0](testModel, 'password').state, cases[testCase]);
+                assert.equal(collection['password'][0]().state, cases[testCase]);
             }
         });
     });
@@ -188,7 +187,7 @@ describe('string validation', function () {
             for (const testCase in cases) {
                 testModel.password = testCase;
 
-                assert.equal(collection['password'][0](testModel, 'password').state, cases[testCase]);
+                assert.equal(collection['password'][0]().state, cases[testCase]);
             }
         });
     });

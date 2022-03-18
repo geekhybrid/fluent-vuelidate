@@ -1,5 +1,4 @@
 import assert from 'assert';
-import { expect } from 'chai';
 import { ModelValidationCollection } from '../src/types';
 import { FieldState } from '../src/types';
 import { createNumberValidator } from '../src/field-types/number-field-type';
@@ -21,7 +20,7 @@ describe('number validation', function () {
         it('#isRequired() should return invalid when number is undefined', function () {
             const model = {} as Model;
 
-            expect(useIsRequired<Model>(model, 'age').state).to.equal(FieldState.Invalid);
+            assert.equal(useIsRequired<Model>(model, 'age').state, FieldState.Invalid);
         });
     });
 
@@ -35,8 +34,8 @@ describe('number validation', function () {
         });
 
         it('#isEquals() should return if numbers are the same', () => {
-            expect(useIsEquals<Model>(model, 'age', model.age + 1).state).to.equal(FieldState.Invalid);
-            expect(useIsEquals<Model>(model, 'age', model.age).state).to.equal(FieldState.Valid);
+            assert.equal(useIsEquals(model, 'age', model.age + 1).state, FieldState.Invalid);
+            assert.equal(useIsEquals(model, 'age', model.age).state, FieldState.Valid);
             const testModel = useTestModel();
             const cases: Record<string, FieldState> = {};
             cases[testModel.age] = FieldState.Valid;
@@ -47,7 +46,7 @@ describe('number validation', function () {
                 const validation = createNumberValidator(model, 'age', collection);
                 validation.isEquals(Number.parseInt(testCase));
 
-                assert.equal(collection['age'][0](testModel, 'age', testCase).state, cases[testCase]);
+                assert.equal(collection['age'][0]().state, cases[testCase]);
             }
         });
     });
@@ -106,7 +105,7 @@ describe('number validation', function () {
             for (const testCase in cases) {
                 testModel.age = Number.parseInt(testCase);
 
-                assert.equal(collection['age'][0](testModel, 'age').state, cases[testCase]);
+                assert.equal(collection['age'][0]().state, cases[testCase]);
             }
         });
 
@@ -125,7 +124,7 @@ describe('number validation', function () {
             for (const testCase in cases) {
                 testModel.age = Number.parseInt(testCase);
 
-                assert.equal(collection['age'][0](testModel, 'age').state, cases[testCase]);
+                assert.equal(collection['age'][0]().state, cases[testCase]);
             }
         });
 
@@ -144,7 +143,7 @@ describe('number validation', function () {
             for (const testCase in cases) {
                 testModel.age = Number.parseInt(testCase);
 
-                assert.equal(collection['age'][0](testModel, 'age').state, cases[testCase]);
+                assert.equal(collection['age'][0]().state, cases[testCase]);
             }
         });
 
@@ -163,7 +162,7 @@ describe('number validation', function () {
             for (const testCase in cases) {
                 testModel.age = Number.parseInt(testCase);
 
-                assert.equal(collection['age'][0](testModel, 'age').state, cases[testCase]);
+                assert.equal(collection['age'][0]().state, cases[testCase]);
             }
         });
 
@@ -184,7 +183,7 @@ describe('number validation', function () {
             for (const testCase in cases) {
                 testModel.age = Number.parseInt(testCase);
 
-                assert.equal(collection['age'][0](testModel, 'age').state, cases[testCase]);
+                assert.equal(collection['age'][0]().state, cases[testCase]);
             }
         });
     });
