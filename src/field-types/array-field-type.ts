@@ -4,7 +4,7 @@ import { useFailWhenAny } from '../validation-actions/fail-when-any';
 export const createArrayValidator = <TModel extends Record<string, any>, TElementType>(
     model: TModel,
     property: string,
-    validations: ModelValidationCollection
+    validations: ModelValidationCollection,
 ): FieldValidator<TElementType[], TModel> => {
     if (!validations[property]) {
         validations[property] = [];
@@ -13,9 +13,9 @@ export const createArrayValidator = <TModel extends Record<string, any>, TElemen
     const _validator = {} as ArrayValidator<TModel, TElementType>;
 
     _validator.failWhenAny = (predicate: (item: TElementType) => Boolean) => {
-        validations[property].push(() => useFailWhenAny(model, property, predicate));
+        validations[property].push(() => useFailWhenAny<TModel, TElementType>(model, property, predicate));
         return _validator;
-    }
+    };
 
     return _validator;
 };

@@ -16,7 +16,7 @@ export const createStringValidator = <TModel extends Record<string, any>>(
 
     const _validator = {} as StringValidator<TModel>;
     _validator.isRequired = () => {
-        validations[property].push(useIsRequired);
+        validations[property].push(() => useIsRequired(model, property));
         return _validator;
     };
 
@@ -26,7 +26,7 @@ export const createStringValidator = <TModel extends Record<string, any>>(
     };
 
     _validator.isEmail = () => {
-        validations[property].push(useIsEmail);
+        validations[property].push(() => useIsEmail(model, property));
         return _validator;
     };
 

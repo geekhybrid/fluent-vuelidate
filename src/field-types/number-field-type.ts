@@ -18,7 +18,7 @@ export const createNumberValidator = <TModel extends Record<string, any>>(
 
     const _validator = {} as NumberValidator<TModel>;
     _validator.isRequired = () => {
-        validations[property].push(useIsRequired);
+        validations[property].push(() => useIsRequired(model, property));
         return _validator;
     };
 
