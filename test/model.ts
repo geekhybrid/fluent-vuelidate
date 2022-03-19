@@ -14,5 +14,6 @@ export const useTestModel = (): Model => {
         lastName: 'vuelidate',
         age: 29,
         currencyCode: 'GBP',
+        wallets: ['BTC', 'Algo'],
     } as Model;
 };

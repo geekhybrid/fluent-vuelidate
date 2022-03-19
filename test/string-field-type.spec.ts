@@ -20,12 +20,12 @@ describe('string validation', function () {
         it('#isRequired() should return valid when string is not empty', function () {
             const model = useTestModel();
 
-            assert.equal(useIsRequired<Model>(model, 'firstName'), FieldState.Valid);
+            assert.equal(useIsRequired<Model>(model, 'firstName').state, FieldState.Valid);
         });
         it('#isRequired() should return invalid when string is undefined', function () {
             const model = {} as Model;
 
-            assert.equal(useIsRequired<Model>(model, 'firstName'), FieldState.Invalid);
+            assert.equal(useIsRequired<Model>(model, 'firstName').state, FieldState.Invalid);
         });
     });
 
@@ -40,7 +40,7 @@ describe('string validation', function () {
 
         it('#isEquals() should return invalid if string does not exactly match field', () => {
             assert.equal(useIsEquals(model, 'firstName', 'NOT_VALID').state, FieldState.Invalid);
-            assert.equal(useIsEquals(model, 'firstName', model.firstName), FieldState.Valid);
+            assert.equal(useIsEquals(model, 'firstName', model.firstName).state, FieldState.Valid);
             const testModel = useTestModel();
             const cases: Record<string, FieldState> = {};
             cases[testModel.firstName] = FieldState.Valid;
@@ -52,34 +52,6 @@ describe('string validation', function () {
                 validation.isEquals(testCase);
 
                 assert.equal(collection['firstName'][0]().state, cases[testCase]);
-            }
-        });
-    });
-
-    describe('#isEmail()', () => {
-        it('should add isEmail() in builder', function () {
-            const collection: ModelValidationCollection = {};
-            const validation = createStringValidator(model, 'email', collection);
-
-            assert.notEqual(validation.isEmail(), undefined);
-            assert.equal(collection['email'].length, 1);
-        });
-
-        it('#isEmail() should match complete email', () => {
-            const testModel = useTestModel();
-            const cases: Record<string, FieldState> = {};
-            cases['hocahaenyi17@gmail.com'] = FieldState.Valid;
-            cases['hocahaenyi17'] = FieldState.Invalid;
-            cases['hocahaenyi17@'] = FieldState.Invalid;
-            cases['hocahaenyi17@gmail'] = FieldState.Invalid;
-
-            const collection: ModelValidationCollection = {};
-            const validation = createStringValidator(model, 'email', collection);
-            validation.isEmail();
-
-            for (const testCase in cases) {
-                testModel.email = testCase;
-                assert.equal(collection['email'][0]().state, cases[testCase]);
             }
         });
     });
@@ -128,7 +100,7 @@ describe('string validation', function () {
             cases['hocahaenyi17@gmail'] = FieldState.Invalid;
 
             const collection: ModelValidationCollection = {};
-            const validation = createStringValidator(model, 'email', collection);
+            const validation = createStringValidator(testModel, 'email', collection);
             validation.isEmail();
 
             for (const testCase in cases) {
