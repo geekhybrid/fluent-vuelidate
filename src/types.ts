@@ -52,6 +52,7 @@ export type RunValidationCallback = () => FieldValidationResult;
 export type FieldValidity = {
     notValid: boolean;
     isValid: boolean;
+    isUntouched: boolean;
 };
 
 export interface ModelValidationCollection extends Record<string, RunValidationCallback[]> {}
@@ -67,7 +68,7 @@ export type ValidationBuilder<T> = {
     for: <TPropertyName extends keyof T, TPropertyType extends T[TPropertyName]>(
         property: TPropertyName,
     ) => FieldValidator<TPropertyType, T>;
-    isValid: boolean;
+    isValid: ComputedRef<boolean>;
     model: T;
     fields: FieldStates<T>;
 };
@@ -81,4 +82,10 @@ export interface ModelState {
 
 export type FieldStates<TModel> = {
     [property in keyof TModel]: FieldValidity;
+};
+
+export type FieldStateController = {
+    set: (field: string, validity: FieldValidity) => void;
+    hasUntouchedFields: () => boolean;
+    areAllFieldsValid: () => boolean;
 };
