@@ -1,24 +1,9 @@
-import { ref } from 'vue';
-import { computed, Ref, watch } from 'vue';
+import { reactive } from 'vue';
+import { computed, watch } from 'vue';
+import { useFieldStateController } from './field-state-controller';
 import { useFieldValidationFactory } from './field-type-factory';
-import { FieldState, FieldStates, FieldValidator, FieldValidity, ModelValidationCollection, ValidationBuilder } from './types';
-
-const runValidations = <TModel>(validations: ModelValidationCollection, fieldStates: Ref<FieldStates<TModel>>) => {
-    console.log("Running validations", validations, fieldStates);
-};
-
-const initialiseFieldStates = <TModel>(model: TModel) => {
-    const _initialStates: Record<string, FieldValidity> = {};
-
-    Object.keys(model).forEach(field => {
-        _initialStates[field] = {
-            isValid: false,
-            notValid: true
-        }
-    });
-
-    return ref<FieldStates<TModel>>(_initialStates as FieldStates<TModel>);
-}
+import { FieldValidator, ModelValidationCollection, ValidationBuilder } from './types';
+import { runValidations } from './validation-runner';
 
 /**
  * Returns an instance of the validation builder.
@@ -28,38 +13,42 @@ const initialiseFieldStates = <TModel>(model: TModel) => {
 export const useValidator = <TModel extends Record<string, any>>(instance: TModel): ValidationBuilder<TModel> => {
     const builder = {} as ValidationBuilder<TModel>;
     const modelValidations: ModelValidationCollection = {};
-    const fieldStateCollection = initialiseFieldStates(instance);
-     
+    const { fieldStateController, fieldStates } = useFieldStateController(instance);
+
+    const isValid = computed(() => {
+        const hasUntouchedFields = fieldStateController.hasUntouchedFields();
+        if (hasUntouchedFields) {
+            runValidations(modelValidations, fieldStateController);
+        }
+        return fieldStateController.areAllFieldsValid();
+    });
 
     const fieldValidation = <TPropertyName extends keyof TModel, TPropertyType extends TModel[TPropertyName]>(
         property: TPropertyName,
     ): FieldValidator<TPropertyType, TModel> => {
-        var fieldValidator = useFieldValidationFactory<TModel>(
+        const fieldValidator = useFieldValidationFactory<TModel>(
             instance,
             property as string,
             modelValidations,
         ) as FieldValidator<TPropertyType, TModel>;
 
-        watch(instance[property], () => modelValidations[property as string].forEach((action) => action()));
+        instance = reactive<TModel>(instance);
 
-        fieldValidator.isValid = computed(() => {
-            var hasUntouchedFields = Object.values(fieldStateCollection).some(
-                (field) => field === FieldState.Untouched,
-            );
-            if (hasUntouchedFields) {
-                runValidations(modelValidations, fieldStateCollection.value);
-            }
-            return Object.values(fieldStateCollection).every((field) => field === FieldState.Valid);
+        watch(instance, () => modelValidations[property as string].forEach((action) => action()), {
+            flush: 'sync',
+            immediate: true,
         });
 
-        fieldValidator.fields = fieldStateCollection.value;//Test
-        fieldValidator.next = builder; //Test
-        fieldValidator.model = instance; //Test
-        fieldValidator.fields = fieldStateCollection.value;//Test
+        fieldValidator.isValid = isValid;
+        fieldValidator.fields = fieldStates;
+        fieldValidator.next = builder;
+        fieldValidator.model = instance;
         return fieldValidator;
     };
 
-    builder.for = fieldValidation; //Test
-    builder.model = instance; //Test
-    return builder; //Test
+    builder.isValid = isValid;
+    builder.fields = fieldStates;
+    builder.for = fieldValidation;
+    builder.model = instance;
+    return builder;
 };
