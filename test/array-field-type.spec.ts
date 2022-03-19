@@ -24,7 +24,7 @@ describe('array validation', function () {
             const testModel = useTestModel();
             testModel.wallets = ['USD', 'BTC', 'ETH'];
 
-            var validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
+            const validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
             validator.failWhenAny((item) => item === 'ETH');
 
             assert.equal(collection['wallets'][0]().state, FieldState.Invalid);
@@ -34,7 +34,7 @@ describe('array validation', function () {
             const testModel = useTestModel();
             testModel.wallets = ['USD', 'BTC'];
 
-            var validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
+            const validator = createArrayValidator<Model, string>(testModel, 'wallets', collection);
             validator.failWhenAny((item) => item === 'ETH');
 
             assert.equal(collection['wallets'][0]().state, FieldState.Valid);
