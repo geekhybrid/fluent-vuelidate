@@ -119,29 +119,4 @@ export default defineComponent({
 | isGreaterOrEquals|            |  ✔️            |
 | isWithinRange:   |            |  ✔️            |
 | failWhenAny      |            |                 |✔️
-
-
-```ts
-type ArrayValidator<TModel, TElementType> = Field<TModel> & {
-    failWhenAny: (predicate: (item: TElementType) => boolean, message?: string) => ArrayValidator<TModel, TElementType>;
-};
-
-type StringValidator<TModel> = Field<TModel> & {
-    isRequired: (error?: string) => StringValidator<TModel>;
-    isEquals: (comparer: string, error?: string) => StringValidator<TModel>;
-    isEmail: (error?: string) => StringValidator<TModel>;
-    hasLength: (fixedLength: number, error?: string) => StringValidator<TModel>;
-    hasMinLength: (minLength: number, error?: string) => StringValidator<TModel>;
-    hasMaxLength: (maxLength: number, error?: string) => StringValidator<TModel>;
-};
-
-type NumberValidator<TModel> = Field<TModel> & {
-    isRequired: (error?: string) => NumberValidator<TModel>;
-    isEquals: (comparer: number, error?: string) => NumberValidator<TModel>;
-    isLessThan:         (comparer: number, error?: string) => NumberValidator<TModel>;
-    isLessOrEquals:  (comparer: number, error?: string) => NumberValidator<TModel>;
-    isGreaterThan:      (comparer: number, error?: string) => NumberValidator<TModel>;
-    isGreaterOrEquals:  (comparer: number, error?: string) => NumberValidator<TModel>;
-    isWithinRange:      (min: number, max: number, error?: string) => NumberValidator<TModel>;
-};
 ```
