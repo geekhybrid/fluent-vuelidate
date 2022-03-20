@@ -18,7 +18,7 @@
   "main": "dist/index.ts",
   "types": "dist/types.d.ts",
   "files": [
-    "dist/index.ts"
+    "dist/"
   ],
   "sideEffects": false,
   "scripts": {
