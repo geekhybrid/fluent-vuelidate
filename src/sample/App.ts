@@ -1,5 +1,5 @@
 import { defineComponent, ref} from 'vue';
-import { useValidator } from '..';
+import { useValidator } from '../../src/use-validations';
 type LoginCredentials = {
     userName: string;
     password: string;
