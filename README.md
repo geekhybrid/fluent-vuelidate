@@ -29,8 +29,6 @@ const validator = useValidator<LoginCredentials>(credentials.value)
     .for('userName').isEmail('Please enter a valid email.');
 ```
 
-`password` and `username` are typesafe arguments and not mere string literals.
-
 And our template could look like this...
 
 ```html
@@ -40,6 +38,16 @@ And our template could look like this...
    <p class="error" v-for="error in form.userName.errors" :key="error">{{  error }}</p>
 </div>
 ```
+
+## Code Editor Benefits
+
+### Auto-Complete
+![image](https://user-images.githubusercontent.com/39003759/159159839-4926e428-ad1e-49e8-9bd4-ace3770e2f81.png)
+
+### Type checking
+![image](https://user-images.githubusercontent.com/39003759/159159885-2b39cc65-e545-486f-8fc5-daaf32517c35.png)
+![image](https://user-images.githubusercontent.com/39003759/159159918-43c21381-dae9-4cb1-b055-48671f6d0b8a.png)
+
 
 ### Full Sample
 ```vue
