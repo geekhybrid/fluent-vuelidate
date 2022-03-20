@@ -1,6 +1,6 @@
 # Introduction
 
-Vuelidate is a great library! Not BUTS.
+Vuelidate is a great library! No BUTS.
 
 `Fluent-vuelidate` serves the same purpose by closely knitting a fluent, typescripted API around your validation flows.
 
@@ -39,15 +39,23 @@ And our template could look like this...
 </div>
 ```
 
-## Code Editor Benefits
 
-### Auto-Complete
-![image](https://user-images.githubusercontent.com/39003759/159159839-4926e428-ad1e-49e8-9bd4-ace3770e2f81.png)
+## Validation API
 
-### Type checking
-![image](https://user-images.githubusercontent.com/39003759/159159885-2b39cc65-e545-486f-8fc5-daaf32517c35.png)
-![image](https://user-images.githubusercontent.com/39003759/159159918-43c21381-dae9-4cb1-b055-48671f6d0b8a.png)
-
+|               | string        | number          | array |
+|---------------|---------------|-----------------|-------------
+| isRequired    | ✔️            | ✔️             |       
+| isEquals      | ✔️            | ✔️             |
+| hasLength     | ✔️            |                |
+| hasMinLength  | ✔️            |                 |
+| hasMaxLength  | ✔️            |  ✔️            |         
+| isLessThan:   |               | ✔️            |
+| isLessOrEquals:  |            | ✔️            |
+| isGreaterThan:   |            |  ✔️            |
+| isGreaterOrEquals|            |  ✔️            |
+| isWithinRange:   |            |  ✔️            |
+| failWhenAny      |            |                 |✔️
+```
 
 ### Full Sample
 ```vue
@@ -112,19 +120,12 @@ export default defineComponent({
 </script>
 ```
 
-## Validation API
+## Code Editor Benefits
 
-|               | string        | number          | array |
-|---------------|---------------|-----------------|-------------
-| isRequired    | ✔️            | ✔️             |       
-| isEquals      | ✔️            | ✔️             |
-| hasLength     | ✔️            |                |
-| hasMinLength  | ✔️            |                 |
-| hasMaxLength  | ✔️            |  ✔️            |         
-| isLessThan:   |               | ✔️            |
-| isLessOrEquals:  |            | ✔️            |
-| isGreaterThan:   |            |  ✔️            |
-| isGreaterOrEquals|            |  ✔️            |
-| isWithinRange:   |            |  ✔️            |
-| failWhenAny      |            |                 |✔️
-```
+### Auto-Complete
+![image](https://user-images.githubusercontent.com/39003759/159159839-4926e428-ad1e-49e8-9bd4-ace3770e2f81.png)
+
+### Type checking (SCRIPT)
+![image](https://user-images.githubusercontent.com/39003759/159159885-2b39cc65-e545-486f-8fc5-daaf32517c35.png)
+### Type checking (TEMPLATE)
+![image](https://user-images.githubusercontent.com/39003759/159159918-43c21381-dae9-4cb1-b055-48671f6d0b8a.png)
