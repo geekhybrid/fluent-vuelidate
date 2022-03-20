@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { computed, watch } from 'vue';
 import { useFieldStateController } from './field-state-controller';
 import { useFieldValidationFactory } from './field-type-factory';
@@ -32,21 +32,25 @@ export const useValidator = <TModel extends Record<string, any>>(instance: TMode
             modelValidations,
         ) as FieldValidator<TPropertyType, TModel>;
 
-        instance = reactive<TModel>(instance);
-
         watch(
-            instance,
-            () =>
+            () => instance[property],
+            () => {
+                if (fieldStates[property].isUntouched) return;
+                const errors: string[] = [];
                 modelValidations[property as string].forEach((action) => {
                     var validationResult = action();
-                    if (fieldStates[property].isUntouched) return;
+                    if (validationResult.state === FieldState.Invalid) {
+                        errors.push(validationResult.error);
+                    }
 
                     fieldStateController.set(property as string, {
                         isValid: validationResult.state === FieldState.Valid,
                         isUntouched: false,
+                        errors,
                         notValid: validationResult.state !== FieldState.Valid,
                     });
-                }),
+                });
+            },
             {
                 flush: 'sync',
                 immediate: true,
