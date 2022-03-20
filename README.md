@@ -84,7 +84,7 @@ And our template could look like this...
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useValidator } from '..';
+import { useValidator } from "fluent-vuelidate/dist";
 type LoginCredentials = {
     userName: string;
     password: string;
