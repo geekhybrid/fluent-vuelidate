@@ -2,11 +2,16 @@ import { FieldState, FieldStateController, ModelValidationCollection } from './t
 
 export const runValidations = (validations: ModelValidationCollection, fieldStateController: FieldStateController) => {
     Object.keys(validations).forEach((field) => {
-        const isFieldValid = validations[field].every((action) => action().state === FieldState.Valid);
+        const validationResults = validations[field].map((action) => action());
+        const isValid = validationResults.every((field) => field.state === FieldState.Valid);
+
         fieldStateController.set(field, {
-            isValid: isFieldValid,
+            isValid,
+            errors: validationResults
+                .filter((result) => result.state === FieldState.Invalid)
+                .map((state) => state.error),
             isUntouched: false,
-            notValid: !isFieldValid,
+            notValid: !isValid,
         });
     });
 };
