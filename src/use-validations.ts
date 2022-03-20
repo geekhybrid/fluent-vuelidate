@@ -34,19 +34,24 @@ export const useValidator = <TModel extends Record<string, any>>(instance: TMode
 
         instance = reactive<TModel>(instance);
 
-        watch(instance, () => modelValidations[property as string].forEach((action) => {
-            var validationResult = action();
-            if (fieldStates[property].isUntouched) return;
+        watch(
+            instance,
+            () =>
+                modelValidations[property as string].forEach((action) => {
+                    var validationResult = action();
+                    if (fieldStates[property].isUntouched) return;
 
-            fieldStateController.set(property as string, {
-                isValid: validationResult.state === FieldState.Valid,
-                isUntouched: false,
-                notValid: validationResult.state !== FieldState.Valid
-            });
-        }), {
-            flush: 'sync',
-            immediate: true,
-        });
+                    fieldStateController.set(property as string, {
+                        isValid: validationResult.state === FieldState.Valid,
+                        isUntouched: false,
+                        notValid: validationResult.state !== FieldState.Valid,
+                    });
+                }),
+            {
+                flush: 'sync',
+                immediate: true,
+            },
+        );
 
         fieldValidator.isValid = isValid;
         fieldValidator.fields = fieldStates;

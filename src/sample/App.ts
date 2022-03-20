@@ -17,7 +17,7 @@ export default defineComponent({
         const submit = () => {
             if (validator.isValid.value) {
                 console.log('Is Valid');
-            }else {
+            } else {
                 console.log('is invalid');
             }
         };
