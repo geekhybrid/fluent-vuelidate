@@ -2,7 +2,7 @@ import { reactive } from 'vue';
 import { computed, watch } from 'vue';
 import { useFieldStateController } from './field-state-controller';
 import { useFieldValidationFactory } from './field-type-factory';
-import { FieldValidator, ModelValidationCollection, ValidationBuilder } from './types';
+import { FieldState, FieldValidator, ModelValidationCollection, ValidationBuilder } from './types';
 import { runValidations } from './validation-runner';
 
 /**
@@ -34,7 +34,16 @@ export const useValidator = <TModel extends Record<string, any>>(instance: TMode
 
         instance = reactive<TModel>(instance);
 
-        watch(instance, () => modelValidations[property as string].forEach((action) => action()), {
+        watch(instance, () => modelValidations[property as string].forEach((action) => {
+            var validationResult = action();
+            if (fieldStates[property].isUntouched) return;
+
+            fieldStateController.set(property as string, {
+                isValid: validationResult.state === FieldState.Valid,
+                isUntouched: false,
+                notValid: validationResult.state !== FieldState.Valid
+            });
+        }), {
             flush: 'sync',
             immediate: true,
         });

@@ -29,7 +29,8 @@ export const useFieldStateController = <TModel>(
     fieldStateController: FieldStateController;
     fieldStates: FieldStates<TModel>;
 } => {
-    const fieldStates = {} as FieldStates<TModel>;
+    const reffieldStates = ref<FieldStates<TModel>>({} as FieldStates<TModel>);
+    const fieldStates = reffieldStates.value;
     setAllFieldsToUntouchedState(instance, fieldStates);
 
     const controller = {} as FieldStateController;
