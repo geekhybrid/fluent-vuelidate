@@ -55,7 +55,6 @@ And our template could look like this...
 | isGreaterOrEquals|            |  ✔️            |
 | isWithinRange:   |            |  ✔️            |
 | failWhenAny      |            |                 |✔️
-```
 
 ### Full Sample
 ```vue
