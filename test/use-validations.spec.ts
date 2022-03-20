@@ -20,7 +20,7 @@ describe('#public API', () => {
         const validator = useValidator<Model>(instance);
 
         const numberValidator = validator.for('age');
-        const stringValidator = validator.for('email');
+        const stringValidator = validator.for('lastName');
         const arrayValidator = validator.for('wallets');
 
         assert.notEqual(numberValidator, undefined);
