@@ -1,15 +1,16 @@
 import { FieldState, FieldValidationResult } from '../types';
 
-export const useIsWithinRange = <TModel extends Record<string, any>, TArgument>(
+export const useIsWithinRange = <TModel extends Record<string, any>>(
     model: TModel,
     propertyName: string,
-    comparer: TArgument,
+    comparer: { min: number; max: number },
+    message?: string,
 ): FieldValidationResult => {
     const property = model[propertyName];
-    const { max, min } = comparer as unknown as { min: number; max: number };
+    const { max, min } = comparer;
 
     return {
-        rule: `${propertyName} is invalid.`,
+        error: message ? message : `${propertyName} is invalid.`,
         field: propertyName,
         state: property >= min && property <= max ? FieldState.Valid : FieldState.Invalid,
     };

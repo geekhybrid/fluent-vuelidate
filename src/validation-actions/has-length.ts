@@ -4,11 +4,12 @@ export const useHasLength = <TModel extends Record<string, any>>(
     model: TModel,
     propertyName: string,
     fixedLength: number,
+    message?: string,
 ): FieldValidationResult => {
     const property = model[propertyName];
 
     return {
-        rule: `${propertyName} is invalid.`,
+        error: message ? message : `${propertyName} is invalid.`,
         field: propertyName,
         state: property && property.length === fixedLength ? FieldState.Valid : FieldState.Invalid,
     };

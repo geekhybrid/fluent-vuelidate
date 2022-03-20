@@ -15,36 +15,36 @@ export const createStringValidator = <TModel extends Record<string, any>>(
     }
 
     const _validator = {} as StringValidator<TModel>;
-    _validator.isRequired = () => {
-        validations[property].push(() => useIsRequired(model, property));
+    _validator.isRequired = (message?: string) => {
+        validations[property].push(() => useIsRequired(model, property, message));
         return _validator;
     };
 
-    _validator.isEquals = (comparer: string) => {
-        validations[property].push(() => useIsEquals(model, property, comparer));
+    _validator.isEquals = (comparer: string, message?: string) => {
+        validations[property].push(() => useIsEquals(model, property, comparer, message));
         return _validator;
     };
 
-    _validator.isEmail = () => {
-        validations[property].push(() => useIsEmail(model, property));
+    _validator.isEmail = (message?: string) => {
+        validations[property].push(() => useIsEmail(model, property, message));
         return _validator;
     };
 
-    _validator.hasLength = (fixedLen: number) => {
-        validations[property].push(() => useHasLength(model, property, fixedLen));
+    _validator.hasLength = (fixedLen: number, message?: string) => {
+        validations[property].push(() => useHasLength(model, property, fixedLen, message));
         return _validator;
     };
 
-    _validator.hasMinLength = (minLength: number) => {
+    _validator.hasMinLength = (minLength: number, message?: string) => {
         validations[property].push(() =>
-            useLimitedLength(model, property, { limit: minLength, type: Extremes.minimum }),
+            useLimitedLength(model, property, { limit: minLength, type: Extremes.minimum }, message),
         );
         return _validator;
     };
 
-    _validator.hasMaxLength = (maxLength: number) => {
+    _validator.hasMaxLength = (maxLength: number, message?: string) => {
         validations[property].push(() =>
-            useLimitedLength(model, property, { limit: maxLength, type: Extremes.maximum }),
+            useLimitedLength(model, property, { limit: maxLength, type: Extremes.maximum }, message),
         );
         return _validator;
     };

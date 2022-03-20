@@ -8,26 +8,26 @@ export enum FieldState {
 }
 
 export type ArrayValidator<TModel, TElementType> = Field<TModel> & {
-    failWhenAny: (predicate: (item: TElementType) => boolean) => ArrayValidator<TModel, TElementType>;
+    failWhenAny: (predicate: (item: TElementType) => boolean, message?: string) => ArrayValidator<TModel, TElementType>;
 };
 
 export type StringValidator<TModel> = Field<TModel> & {
-    isRequired: () => StringValidator<TModel>;
-    isEquals: (comparer: string) => StringValidator<TModel>;
-    isEmail: () => StringValidator<TModel>;
-    hasLength: (fixedLength: number) => StringValidator<TModel>;
-    hasMinLength: (minLength: number) => StringValidator<TModel>;
-    hasMaxLength: (maxLength: number) => StringValidator<TModel>;
+    isRequired: (error?: string) => StringValidator<TModel>;
+    isEquals: (comparer: string, error?: string) => StringValidator<TModel>;
+    isEmail: (error?: string) => StringValidator<TModel>;
+    hasLength: (fixedLength: number, error?: string) => StringValidator<TModel>;
+    hasMinLength: (minLength: number, error?: string) => StringValidator<TModel>;
+    hasMaxLength: (maxLength: number, error?: string) => StringValidator<TModel>;
 };
 
 export type NumberValidator<TModel> = Field<TModel> & {
-    isRequired: () => NumberValidator<TModel>;
-    isEquals: (comparer: number) => NumberValidator<TModel>;
-    isLessThan: (comparer: number) => NumberValidator<TModel>;
-    isLessOrEquals: (comparer: number) => NumberValidator<TModel>;
-    isGreaterThan: (comparer: number) => NumberValidator<TModel>;
-    isGreaterOrEquals: (comparer: number) => NumberValidator<TModel>;
-    isWithinRange: (min: number, max: number) => NumberValidator<TModel>;
+    isRequired: (error?: string) => NumberValidator<TModel>;
+    isEquals: (comparer: number, error?: string) => NumberValidator<TModel>;
+    isLessThan: (comparer: number, error?: string) => NumberValidator<TModel>;
+    isLessOrEquals: (comparer: number, error?: string) => NumberValidator<TModel>;
+    isGreaterThan: (comparer: number, error?: string) => NumberValidator<TModel>;
+    isGreaterOrEquals: (comparer: number, error?: string) => NumberValidator<TModel>;
+    isWithinRange: (min: number, max: number, error?: string) => NumberValidator<TModel>;
 };
 
 export type FieldValidator<TPropertyType, T> = TPropertyType extends string
@@ -38,7 +38,7 @@ export type FieldValidator<TPropertyType, T> = TPropertyType extends string
 
 export type FieldValidationResult = {
     field: string;
-    rule: string;
+    error: string;
     state: FieldState;
 };
 
@@ -53,6 +53,7 @@ export type FieldValidity = {
     notValid: boolean;
     isValid: boolean;
     isUntouched: boolean;
+    errors: string[];
 };
 
 export interface ModelValidationCollection extends Record<string, RunValidationCallback[]> {}

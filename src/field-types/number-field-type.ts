@@ -17,38 +17,38 @@ export const createNumberValidator = <TModel extends Record<string, any>>(
     }
 
     const _validator = {} as NumberValidator<TModel>;
-    _validator.isRequired = () => {
-        validations[property].push(() => useIsRequired(model, property));
+    _validator.isRequired = (message?: string) => {
+        validations[property].push(() => useIsRequired(model, property, message));
         return _validator;
     };
 
-    _validator.isEquals = (comparer: number) => {
-        validations[property].push(() => useIsEquals(model, property, comparer));
+    _validator.isEquals = (comparer: number, message?: string) => {
+        validations[property].push(() => useIsEquals(model, property, comparer, message));
         return _validator;
     };
 
-    _validator.isLessThan = (comparer: number) => {
-        validations[property].push(() => useLessThan(model, property, comparer));
+    _validator.isLessThan = (comparer: number, message?: string) => {
+        validations[property].push(() => useLessThan(model, property, comparer, message));
         return _validator;
     };
 
-    _validator.isLessOrEquals = (comparer: number) => {
-        validations[property].push(() => useLessthanOrEquals(model, property, comparer));
+    _validator.isLessOrEquals = (comparer: number, message?: string) => {
+        validations[property].push(() => useLessthanOrEquals(model, property, comparer, message));
         return _validator;
     };
 
-    _validator.isGreaterThan = (comparer: number) => {
-        validations[property].push(() => useGreaterthan(model, property, comparer));
+    _validator.isGreaterThan = (comparer: number, message?: string) => {
+        validations[property].push(() => useGreaterthan(model, property, comparer, message));
         return _validator;
     };
 
-    _validator.isGreaterOrEquals = (comparer: number) => {
-        validations[property].push(() => useGreathanOrEquals(model, property, comparer));
+    _validator.isGreaterOrEquals = (comparer: number, message?: string) => {
+        validations[property].push(() => useGreathanOrEquals(model, property, comparer, message));
         return _validator;
     };
 
-    _validator.isWithinRange = (min: number, max: number) => {
-        validations[property].push(() => useIsWithinRange(model, property, { min, max }));
+    _validator.isWithinRange = (min: number, max: number, message?: string) => {
+        validations[property].push(() => useIsWithinRange(model, property, { min, max }, message));
         return _validator;
     };
 

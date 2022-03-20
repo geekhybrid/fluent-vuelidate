@@ -1,15 +1,16 @@
 import { Extremes, FieldState, FieldValidationResult } from '../types';
 
-export const useLimitedLength = <TModel extends Record<string, any>, TArgument>(
+export const useLimitedLength = <TModel extends Record<string, any>>(
     model: TModel,
     propertyName: string,
-    args: TArgument,
+    limits: { limit: number; type: Extremes },
+    message?: string,
 ): FieldValidationResult => {
     const property = model[propertyName];
-    const { limit, type } = args as unknown as { limit: number; type: Extremes };
+    const { limit, type } = limits;
 
     return {
-        rule: `${propertyName} is invalid.`,
+        error: message ? message : `${propertyName} is invalid.`,
         field: propertyName,
         state:
             type === Extremes.minimum

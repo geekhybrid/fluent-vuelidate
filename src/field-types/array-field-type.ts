@@ -12,8 +12,8 @@ export const createArrayValidator = <TModel extends Record<string, any>, TElemen
 
     const _validator = {} as ArrayValidator<TModel, TElementType>;
 
-    _validator.failWhenAny = (predicate: (item: TElementType) => boolean) => {
-        validations[property].push(() => useFailWhenAny<TModel, TElementType>(model, property, predicate));
+    _validator.failWhenAny = (predicate: (item: TElementType) => boolean, message?: string) => {
+        validations[property].push(() => useFailWhenAny<TModel, TElementType>(model, property, predicate, message));
         return _validator;
     };
 

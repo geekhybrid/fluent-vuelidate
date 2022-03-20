@@ -6,6 +6,7 @@ const setAllFieldsToUntouchedState = <TModel>(instance: TModel, fieldStates: Fie
         fieldStates[field as unknown as keyof TModel] = {
             isUntouched: true,
             isValid: false,
+            errors: [],
             notValid: false,
         };
     });

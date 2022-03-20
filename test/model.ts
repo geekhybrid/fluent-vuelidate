@@ -17,3 +17,5 @@ export const useTestModel = (): Model => {
         wallets: ['BTC', 'Algo'],
     } as Model;
 };
+
+export const testValidationMessage = 'Validation Error';

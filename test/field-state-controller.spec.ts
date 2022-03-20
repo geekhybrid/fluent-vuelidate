@@ -22,6 +22,7 @@ describe('field-state-controller', () => {
             fieldStateController.set(field, {
                 isValid: true,
                 isUntouched: false,
+                errors: [],
                 notValid: false,
             }),
         );
@@ -35,6 +36,7 @@ describe('field-state-controller', () => {
             fieldStateController.set(field, {
                 isValid: false,
                 isUntouched: true,
+                errors: [],
                 notValid: false,
             }),
         );
@@ -46,6 +48,7 @@ describe('field-state-controller', () => {
         const expectedValidity = {
             isValid: false,
             isUntouched: true,
+            errors: [],
             notValid: false,
         };
 
