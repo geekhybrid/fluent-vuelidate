@@ -42,6 +42,6 @@ export const useFieldStateController = <TModel>(
 
     return {
         fieldStateController: ref<FieldStateController>(controller).value,
-        fieldStates: fieldStates,
+        fieldStates,
     };
 };

@@ -3,7 +3,7 @@ import { FieldState, FieldStateController, ModelValidationCollection } from './t
 export const runValidations = (validations: ModelValidationCollection, fieldStateController: FieldStateController) => {
     Object.keys(validations).forEach((field) => {
         const validationResults = validations[field].map((action) => action());
-        const isValid = validationResults.every((field) => field.state === FieldState.Valid);
+        const isValid = validationResults.every((f) => f.state === FieldState.Valid);
 
         fieldStateController.set(field, {
             isValid,

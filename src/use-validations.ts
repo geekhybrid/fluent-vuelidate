@@ -37,7 +37,7 @@ export const useValidator = <TModel extends Record<string, any>>(instance: TMode
                 if (fieldStates[property].isUntouched) return;
                 const errors: string[] = [];
                 modelValidations[property as string].forEach((action) => {
-                    var validationResult = action();
+                    const validationResult = action();
                     if (validationResult.state === FieldState.Invalid) {
                         errors.push(validationResult.error);
                     }

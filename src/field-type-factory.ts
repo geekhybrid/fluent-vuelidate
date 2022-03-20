@@ -9,8 +9,8 @@ export const useFieldValidationFactory = <TModel extends Record<string, any>>(
     validations: ModelValidationCollection,
 ) => {
     const type = typeof instance[propertyName];
-    if (type == 'string') return createStringValidator<TModel>(instance, propertyName, validations);
-    if (type == 'number') return createNumberValidator<TModel>(instance, propertyName, validations);
+    if (type === 'string') return createStringValidator<TModel>(instance, propertyName, validations);
+    if (type === 'number') return createNumberValidator<TModel>(instance, propertyName, validations);
     type T = typeof type;
     return createArrayValidator<TModel, T>(instance, propertyName, validations);
 };

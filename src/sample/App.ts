@@ -11,11 +11,6 @@ export default defineComponent({
             password: '',
         });
 
-        // const validator = useValidator<LoginCredentials>(credentials.value)
-        //     .for('password').isRequired('Password is required').next
-        //     .for('userName').isEmail('Please enter a valid email.');
-
-        //Multi-rules
         const validator = useValidator<LoginCredentials>(credentials.value)
             .for('password')
                 .isRequired('Password is required')
@@ -24,9 +19,7 @@ export default defineComponent({
 
         const submit = () => {
             if (validator.isValid.value === true) {
-                console.log('Is Valid');
-            } else {
-                console.log('is invalid');
+                // Call API
             }
         };
 
