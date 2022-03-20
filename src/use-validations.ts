@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import { computed, watch } from 'vue';
 import { useFieldStateController } from './field-state-controller';
 import { useFieldValidationFactory } from './field-type-factory';
