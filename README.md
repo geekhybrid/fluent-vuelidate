@@ -1,10 +1,5 @@
 # Introduction
 
-[![NPM Version](https://badgen.net/npm/v/fluent-vuelidate)](https://www.npmjs.com/package/fluent-vuelidate)
-![License](https://badgen.net/npm/license/fluent-vuelidate)
-![Last Commit](https://badgen.net/github/last-commit/geekhybrid/fluent-vuelidate/master)
-![Open Issues](https://badgen.net/github/open-issues/geekhybrid/fluent-vuelidate)
-
 Vuelidate is a great library! Not BUTS.
 
 `Fluent-vuelidate` serves the same purpose by closely knitting a fluent, typescripted API around your validation flows.
