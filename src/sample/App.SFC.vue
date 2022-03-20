@@ -1,4 +1,29 @@
-import { defineComponent, ref} from 'vue';
+<template>
+    <label>Username</label>
+    <input v-model="credentials.userName" style="width: 500px" />
+    <div v-if="form.userName.notValid">
+        <p class="error" v-for="error in form.userName.errors" :key="error">{{  error }}</p>
+    </div>
+    <br>
+
+    <label>Password</label>
+    <input v-model="credentials.password" style="width: 500px" />
+    <div v-if="form.password.notValid">
+        <p class="error" v-for="error in form.password.errors" :key="error">{{  error }}</p>
+    </div>
+    <button @click="submit">Submit</button>
+</template>
+
+<script lang="ts" src="./App.ts" />
+<style scoped>
+    .error {
+        color: red;
+    }
+</style>
+
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
 import { useValidator } from '..';
 type LoginCredentials = {
     userName: string;
@@ -10,12 +35,6 @@ export default defineComponent({
             userName: '',
             password: '',
         });
-
-        // const validator = useValidator<LoginCredentials>(credentials.value)
-        //     .for('password').isRequired('Password is required').next
-        //     .for('userName').isEmail('Please enter a valid email.');
-
-        //Multi-rules
         const validator = useValidator<LoginCredentials>(credentials.value)
             .for('password')
                 .isRequired('Password is required')
@@ -39,3 +58,5 @@ export default defineComponent({
         };
     },
 });
+
+</script>
