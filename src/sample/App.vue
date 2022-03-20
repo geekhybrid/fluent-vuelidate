@@ -1,6 +1,7 @@
 <template>
     <h1>{{ header }}</h1>
-    <small v-if="form.password.notValid">Error</small>
+    <input v-model="credentials.userName" style="width: 500px" />
+    <small v-if="form.userName.notValid">Invalid user name</small>
     <button @click="submit">Submit</button>
 </template>
 

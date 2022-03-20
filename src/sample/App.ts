@@ -7,23 +7,24 @@ type LoginCredentials = {
 export default defineComponent({
     setup() {
         const credentials = {
-            userName: 'hocahaenyi17@gmail.com',
-            password: 'cheesebehinddedoor',
+            userName: '',
+            password: '',
         };
         const validator = useValidator<LoginCredentials>(credentials)
-            .for('password')
-            .isRequired()
-            .next.for('userName')
-            .isEmail();
+            .for('password').isRequired().next
+            .for('userName').isEmail();
 
         const submit = () => {
             if (validator.isValid.value) {
-                console.log('Is invalid');
+                console.log('Is Valid');
+            }else {
+                console.log('is invalid');
             }
         };
         return {
             header: 'Fluent-Vuelidate Sample',
             form: validator.fields,
+            credentials: validator.model,
             canExecute: validator.isValid,
             submit,
         };
