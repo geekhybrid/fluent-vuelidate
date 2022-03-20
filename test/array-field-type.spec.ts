@@ -1,7 +1,6 @@
 import assert from 'assert';
-import { FieldState } from '../dist/types';
 import { createArrayValidator } from '../src/field-types/array-field-type';
-import { ModelValidationCollection } from '../src/types';
+import { FieldState, ModelValidationCollection } from '../src/types';
 import { Model, testValidationMessage, useTestModel } from './model';
 
 const model = useTestModel();
